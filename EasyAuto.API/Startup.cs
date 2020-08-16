@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyAuto.API.ExternalApi;
+using EasyAuto.API.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +28,14 @@ namespace EasyAuto.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-3.1
+            var vehicleApiSettings = Configuration.GetSection("VehicleApiSettings").Get<VehicleApiSettings>(); //Settings stored in app.config (base url, api key to add to header for all requests)
+            services.AddHttpClient<IVehicleApi, VehicleApi>("VehicleApi",
+                client =>
+                {
+                    client.BaseAddress = new Uri(vehicleApiSettings.BaseAddress);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

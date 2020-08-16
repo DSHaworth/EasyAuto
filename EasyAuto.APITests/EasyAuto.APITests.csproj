@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EasyAuto.API\EasyAuto.API.csproj" />
+    <ProjectReference Include="..\Framework.Common\Framework.Common.csproj" />
   </ItemGroup>
 
 </Project>

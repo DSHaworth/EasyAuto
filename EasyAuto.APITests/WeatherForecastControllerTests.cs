@@ -1,9 +1,12 @@
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using EasyAuto.API;
+using EasyAuto.API.Models;
 using EasyAuto.APITests.Support;
 using FluentAssertions;
+using Framework.Common.Helpers;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -36,6 +39,18 @@ namespace EasyAuto.APITests
             var response = await _client.GetAsync("/notfound");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async Task GetVehicles()
+        {
+            var response = await _client.GetAsync("api/vehicle");
+
+            var vehicleResponse = JsonConvert.DeserializeObject<VehicleMakeResult>(await response.Content.ReadAsStringAsync());
+
+            //Assert.NotEmpty(vehicleResponse.Item); 
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         //[Fact]
